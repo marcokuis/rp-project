@@ -58,6 +58,10 @@ app.controller('gameCtrl', function ($scope, $http) {
         });
     };
 
+    $scope.loadByName = function () {
+
+    }
+
     //Inhoud player area aan GM area toevoegen
     $scope.appendText = function (nr) {
         if ($scope.playerID === 'GM') {
