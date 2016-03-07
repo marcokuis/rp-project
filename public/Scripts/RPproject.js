@@ -26,9 +26,8 @@ Additionally the data is added to a list rather than updating the existing data.
 its own unique ID, which I might need to overtake/overwrite instead, if possible*/
 
 
-app.controller('gameCtrl', function ($scope, $http) {
-    $scope.playerID = "";    
-    //$scope.gamedata = { id: 1, story: "", players: [] };
+app.controller('gameCtrl', function ($scope, $http) { 
+    $scope.gamedata = { id: 1, story: "", players: [] };
    
    
     //Data laden uit mongo (get request naar URL gameLoad --> rp-server luistert)
@@ -44,9 +43,6 @@ app.controller('gameCtrl', function ($scope, $http) {
               console.log(status);
           });
     };
-
-    //Bij openen website eenmalig laden
-    //$scope.load();
 
     //Data opslaan (post request naar URL gameSave --> rp-server luistert)
     $scope.save = function () {
