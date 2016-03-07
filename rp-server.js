@@ -35,7 +35,8 @@ app.get('/gameLoad', function (req, res) {
 });
 
 app.post('/gameSave', function (req, res) {
-    console.log("incoming at save" + req.body.id, req.body.story, req.body.players);
+    console.log("incoming at save" + req.body);
+    console.log("incoming at save 2" + req.params);
 
 
     var newGame = new Game({
