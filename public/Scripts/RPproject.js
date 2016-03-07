@@ -37,7 +37,9 @@ app.controller('gameCtrl', function ($scope, $http) {
           success(function (data, status, headers, config) {
               console.log("loaded: " + data);
               //Hierna vertaalslag van data naar GMarea en Player areas!
-              $scope.gamedata = data;
+              $scope.gamedata.id = data.id;
+              $scope.gamedata.story = data.story;
+              $scope.gamedata.players = data.players;
           }).
           error(function (data, status, headers, config) {
               console.log(status);

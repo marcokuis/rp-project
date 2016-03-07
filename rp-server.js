@@ -36,14 +36,19 @@ app.get('/gameLoad', function (req, res) {
 
 app.post('/gameSave', function (req, res) {
     console.log("incoming at save" + req.body);
+
+    var newGame = new Game({
+        id: req.body.id,
+        contentStory: req.body.story,
+        contentPlayers: req.body.players
+    })
     var obj = req.body;
-    var id = obj._id;
-    delete obj._id;
-    if (id) {
-        Game.update({_id: id}, obj, {upsert: true}, function (err) {
+    console.log("server call save");
+    console.log(newGame);
+
+    Game.update({id: obj.id}, obj, { upsert: true }, function (err) {
         if (err) res.send(err);
         res.status(200).end();
-        });
-    }
-    
+    });
+
 });
