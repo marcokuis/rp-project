@@ -27,8 +27,8 @@ its own unique ID, which I might need to overtake/overwrite instead, if possible
 
 
 app.controller('gameCtrl', function ($scope, $http) { 
-    $scope.gamedata = { id: 1, story: "", players: [] };
-   
+    //$scope.gamedata = { id: 1, story: "", players: [] };
+    $scope.gameid = 1;
    
     //Data laden uit mongo (get request naar URL gameLoad --> rp-server luistert)
     $scope.load = function () {
@@ -46,7 +46,7 @@ app.controller('gameCtrl', function ($scope, $http) {
 
     //Data opslaan (post request naar URL gameSave --> rp-server luistert)
     $scope.save = function () {
-
+        $scope.gamedata.id = $scope.gameid;
         $scope.gamedata.players = [$scope.p1, $scope.p2, $scope.p3, $scope.p4, $scope.p5, $scope.p6];
         dat = $scope.gamedata;
         console.log(dat);
