@@ -21,11 +21,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 }]);
 
 
-/*CURRENT STATUS: App is working but nothing is written to the server. Node receives data undefined. 
-Additionally the data is added to a list rather than updating the existing data. Program automatically adds
-its own unique ID, which I might need to overtake/overwrite instead, if possible*/
 
 
+//Controller voor Game scherm
 app.controller('gameCtrl', function ($scope, $http) { 
     $scope.gamedata = {}
     $scope.gameid = 1;
@@ -36,7 +34,6 @@ app.controller('gameCtrl', function ($scope, $http) {
         $http.get('/gameLoad').
           success(function (data, status, headers, config) {
               console.log("loaded: " + data.id + data.players + data.story);
-              //Hierna vertaalslag van data naar GMarea en Player areas!
               $scope.gamedata.id = data.id;
               $scope.gamedata.story = data.story;
               $scope.gamedata.players = data.players;
@@ -52,13 +49,11 @@ app.controller('gameCtrl', function ($scope, $http) {
         $scope.gamedata.players = [$scope.p1, $scope.p2, $scope.p3, $scope.p4, $scope.p5, $scope.p6];
         dat = $scope.gamedata;
         console.log(dat);
-        $http.post('/gameSave', angular.toJson(dat)).success(function () {
+        $http.post('/gameUpdate', angular.toJson(dat)).success(function () {
             console.log("sending from save: " + dat);
             $scope.load();
         });
     };
-
-
 
     //Inhoud player area aan GM area toevoegen
     $scope.appendText = function (nr) {
@@ -99,20 +94,34 @@ app.controller('gameCtrl', function ($scope, $http) {
 //Controller voor welkomstscherm. Mogelijk goede plek voor Login?
 app.controller('homeCtrl', function ($scope, $http) {
 
+    //Create new game. Title entered in prompt.
     $scope.createNewGame = function () {
         var newTitle = prompt("Title of the new game: ");
         var newGame = {
             title: newTitle,
-            contentStory: "",
-            contentPlayers: []
+            story: "",
+            players: []
         }
         $http.post('/gameSave', angular.toJson(newGame)).success(function () {
             console.log("sending from save: " + angular.toJson(newGame));
         });
     }
 
+    //Load game with title from prompt.
     $scope.loadByName = function () {
         var loadTitle = prompt("Title of the game: ");
+
+        console.log("load function");
+        $http.get('/gameLoad').
+          success(function (data, status, headers, config) {
+              console.log("loaded: " + data.id + data.players + data.story);
+              $scope.gamedata.id = data.id;
+              $scope.gamedata.story = data.story;
+              $scope.gamedata.players = data.players;
+          }).
+          error(function (data, status, headers, config) {
+              console.log(status);
+          });
     }
 });
 

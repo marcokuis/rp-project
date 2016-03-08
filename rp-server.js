@@ -25,7 +25,9 @@ var gameSchema = new mongoose.Schema({
 //model van bovenstaand schema
 var Game = mongoose.model('Game', gameSchema);
 
-//wanneer listener een Get request ontvangt
+// --------------------------- REST API FUNCTIONS -----------------------------------
+
+//GET
 app.get('/gameLoad', function (req, res) {
     Game.find(function (err, gamedata) {
         console.log("server call load");
@@ -34,6 +36,7 @@ app.get('/gameLoad', function (req, res) {
     });
 });
 
+//POST
 app.post('/gameSave', function (req, res) {
     console.log("incoming at save" + req.body);
 
@@ -50,13 +53,9 @@ app.post('/gameSave', function (req, res) {
         if (err) res.send(err);
         res.status(200).end();
     });
-
-
-
-    /*var query = { 'username': req.user.username };
-    req.newData.username = req.user.username;
-    MyModel.findOneAndUpdate(query, req.newData, { upsert: true }, function (err, doc) {
-        if (err) return res.send(500, { error: err });
-        return res.send("succesfully saved");
-    });*/
 });
+
+//PUT
+app.put('/gameUpdate', function (req, res) {
+    
+})
