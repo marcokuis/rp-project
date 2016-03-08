@@ -30,9 +30,15 @@
             </div>
 
             <!-- main area -->
-            <h1>Welcome to ROLE WITH IT</h1>
-            <h3>The free form roleplay hub</h3>
-
+            <div class="col-xs-12 col-sm-9">
+                <h1>Welcome to ROLE WITH IT</h1>
+                <h3>The free form roleplay hub</h3>
+                <table>
+                    <tr ng-repeat="game in gamedata">
+                        <td ng-click="gameLoad(game._id)"><h2>{{game.title}}</h2></td>
+                    </tr>
+                </table>
+            </div>
         </div><!-- /.col-xs-12 main -->
     </div><!--/.row-->
 </div><!--/.container-->

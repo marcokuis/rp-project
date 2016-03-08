@@ -25,27 +25,12 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 //Controller voor Game scherm
 app.controller('gameCtrl', function ($scope, $http) { 
-    $scope.gamedata = {}
-    $scope.gameid = 1;
-   
-    //Data laden uit mongo (get request naar URL gameLoad --> rp-server luistert)
-    $scope.load = function () {
-        console.log("load function");
-        $http.get('/gameLoad').
-          success(function (data, status, headers, config) {
-              console.log("loaded: " + data.id + data.players + data.story);
-              $scope.gamedata.id = data.id;
-              $scope.gamedata.story = data.story;
-              $scope.gamedata.players = data.players;
-          }).
-          error(function (data, status, headers, config) {
-              console.log(status);
-          });
-    };
+    $scope.gamedata = {}   
+    
 
     //Data opslaan (post request naar URL gameSave --> rp-server luistert)
     $scope.save = function () {
-        $scope.gamedata.id = $scope.gameid;
+
         $scope.gamedata.players = [$scope.p1, $scope.p2, $scope.p3, $scope.p4, $scope.p5, $scope.p6];
         dat = $scope.gamedata;
         console.log(dat);
@@ -84,7 +69,7 @@ app.controller('gameCtrl', function ($scope, $http) {
                     $scope.p6 = "";
                     break;
             }
-            $scope.gamedata.story.replace(/\s+/g, ' ');
+            
             }
         }
     });
@@ -93,6 +78,8 @@ app.controller('gameCtrl', function ($scope, $http) {
 
 //Controller voor welkomstscherm. Mogelijk goede plek voor Login?
 app.controller('homeCtrl', function ($scope, $http) {
+    $scope.gamedata = {}
+    $scope.load();
 
     //Create new game. Title entered in prompt.
     $scope.createNewGame = function () {
@@ -104,24 +91,35 @@ app.controller('homeCtrl', function ($scope, $http) {
         }
         $http.post('/gameSave', angular.toJson(newGame)).success(function () {
             console.log("sending from save: " + angular.toJson(newGame));
+            $scope.load();
         });
     }
 
-    //Load game with title from prompt.
-    $scope.loadByName = function () {
-        var loadTitle = prompt("Title of the game: ");
+    //Load data of all games (not ideal for performance; should be 2 
+    //datasets in db, 1 with just title and id, other with full data)
+    $scope.load = function () {
 
         console.log("load function");
-        $http.get('/gameLoad').
+        $http.get('/gamesLoad').
           success(function (data, status, headers, config) {
-              console.log("loaded: " + data.id + data.players + data.story);
-              $scope.gamedata.id = data.id;
-              $scope.gamedata.story = data.story;
-              $scope.gamedata.players = data.players;
+              for (i in data) {
+                  console.log(angular.toJson(i));
+              }
+              $scope.gamedata = data;
           }).
           error(function (data, status, headers, config) {
               console.log(status);
           });
+    }
+
+    $scope.gameLoad = function (id) {
+        $http.get('/gameLoad').
+            success(function (data, status, headers, config) {
+                $rootscope.activeGame = data;
+            }).
+            error(function (data, status, headers, config) {
+                console.log(status);
+            });
     }
 });
 

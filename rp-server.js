@@ -28,12 +28,16 @@ var Game = mongoose.model('Game', gameSchema);
 // --------------------------- REST API FUNCTIONS -----------------------------------
 
 //GET
-app.get('/gameLoad', function (req, res) {
+app.get('/gamesLoad', function (req, res) {
     Game.find(function (err, gamedata) {
         console.log("server call load");
         if (err) res.send(err);
-        else console.log(gamedata);res.json(gamedata);
+        else res.json(gamedata);
     });
+});
+
+app.get('/gameLoad', function (req, res) {
+    //find game by ID
 });
 
 //POST
