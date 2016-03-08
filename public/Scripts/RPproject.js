@@ -28,6 +28,7 @@ its own unique ID, which I might need to overtake/overwrite instead, if possible
 
 app.controller('gameCtrl', function ($scope, $http) { 
     //$scope.gamedata = { id: 1, story: "", players: [] };
+    $scope.gamedata = {}
     $scope.gameid = 1;
    
     //Data laden uit mongo (get request naar URL gameLoad --> rp-server luistert)
@@ -67,30 +68,31 @@ app.controller('gameCtrl', function ($scope, $http) {
         if ($scope.playerID === 'GM') {
             switch (nr) {
                 case 1:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p1;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p1||'');
                     $scope.p1 = "";
                     break;
                 case 2:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p2;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p2||'');
                     $scope.p2 = "";
                     break;
                 case 3:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p3;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p3||'');
                     $scope.p3 = "";
                     break;
                 case 4:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p4;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p4||'');
                     $scope.p4 = "";
                     break;
                 case 5:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p5;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p5||'');
                     $scope.p5 = "";
                     break;
                 case 6:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + $scope.p6;
+                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p6 || '');
                     $scope.p6 = "";
                     break;
-                }
+            }
+            $scope.gamedata.story.replace(/\s+/g, ' ');
             }
         }
     });
