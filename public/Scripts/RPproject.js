@@ -27,7 +27,6 @@ its own unique ID, which I might need to overtake/overwrite instead, if possible
 
 
 app.controller('gameCtrl', function ($scope, $http) { 
-    //$scope.gamedata = { id: 1, story: "", players: [] };
     $scope.gamedata = {}
     $scope.gameid = 1;
    
@@ -36,7 +35,7 @@ app.controller('gameCtrl', function ($scope, $http) {
         console.log("load function");
         $http.get('/gameLoad').
           success(function (data, status, headers, config) {
-              console.log("loaded: " + data);
+              console.log("loaded: " + data.id + data.players + data.story);
               //Hierna vertaalslag van data naar GMarea en Player areas!
               $scope.gamedata.id = data.id;
               $scope.gamedata.story = data.story;
@@ -59,9 +58,7 @@ app.controller('gameCtrl', function ($scope, $http) {
         });
     };
 
-    $scope.loadByName = function () {
 
-    }
 
     //Inhoud player area aan GM area toevoegen
     $scope.appendText = function (nr) {
@@ -97,9 +94,26 @@ app.controller('gameCtrl', function ($scope, $http) {
         }
     });
 
-//Controller voor welkomstscherm. Mogelijk goede plek voor Login?
-app.controller('homeCtrl', function ($scope) {
 
+
+//Controller voor welkomstscherm. Mogelijk goede plek voor Login?
+app.controller('homeCtrl', function ($scope, $http) {
+
+    $scope.createNewGame = function () {
+        var newTitle = prompt("Title of the new game: ");
+        var newGame = {
+            title: newTitle,
+            contentStory: "",
+            contentPlayers: []
+        }
+        $http.post('/gameSave', angular.toJson(newGame)).success(function () {
+            console.log("sending from save: " + angular.toJson(newGame));
+        });
+    }
+
+    $scope.loadByName = function () {
+        var loadTitle = prompt("Title of the game: ");
+    }
 });
 
 //jQuery voor toggle sidebar op kleine schermen
