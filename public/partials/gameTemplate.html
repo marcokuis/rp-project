@@ -35,13 +35,14 @@
 
             <!-- main area -->
             <div class="col-xs-12 col-sm-9 banner"><img src="./Content/Images/banner.jpg" class="img-responsive" alt="banner" width="800" height="170"></div>
+            <div class="col-xs-12 col-sm-9" align="center"><h1>{{gamedata.title}}</h1></div>
             <div class="col-xs-12 col-sm-9">
-                <textarea id="GMstory" ng-model="gamedata.story" ng-readonly="playerID != 'GM'" placeholder="Main Story / GM area">{{GMarea}}</textarea>
+                <textarea id="GMstory" ng-model="gamedata.story" ng-readonly="playerID != 'GM'" placeholder="Main Story / GM area">{{gamedata.story}}</textarea>
             </div>
 
             <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(1)">
                 <textarea class="playerEntry" id="Player1" 
-                          ng-model="p1" ng-readonly="playerID != '1'" placeholder="Player 1">{{p1}}</textarea>
+                          ng-model="p1" ng-readonly="playerID != '1'" placeholder="Player 1">{{gamedata.players[0]}}</textarea>
             </div>
             <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(2)">
                 <textarea class="playerEntry" id="Player2"

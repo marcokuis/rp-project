@@ -22,22 +22,49 @@ app.config(['$routeProvider', function ($routeProvider) {
 
 
 
+app.service('activeGameService', function() {
+    var gameData = {};
+
+    var setGameData = function(curGame) {
+        gameData = curGame;
+        console.log("game data set: " + angular.toJson(gameData));
+    };
+
+    var getGameData = function(){
+        return gameData;
+    };
+
+    return {
+        setGameData: setGameData,
+        getGameData: getGameData
+    };
+
+});
+
 
 //Controller voor Game scherm
-app.controller('gameCtrl', function ($scope, $http) { 
+app.controller('gameCtrl', function ($scope, $http, activeGameService) { 
     $scope.gamedata = {}   
     
+    $scope.load = function () {
+        $scope.gamedata = activeGameService.getGameData();
+        console.log("loaded game data: " + angular.toJson($scope.gamedata));
+    }
+
+    $scope.load()
 
     //Data opslaan (post request naar URL gameSave --> rp-server luistert)
     $scope.save = function () {
 
         $scope.gamedata.players = [$scope.p1, $scope.p2, $scope.p3, $scope.p4, $scope.p5, $scope.p6];
         dat = $scope.gamedata;
-        console.log(dat);
-        $http.post('/gameUpdate', angular.toJson(dat)).success(function () {
-            console.log("sending from save: " + dat);
-            $scope.load();
-        });
+        $http.put('/gameUpdate/' + dat._id, angular.toJson(dat))
+            .success(function () {
+                console.log("Saved successfully");
+            })
+            .error(function(){
+                console.log("Failed to save game");
+            });
     };
 
     //Inhoud player area aan GM area toevoegen
@@ -69,15 +96,14 @@ app.controller('gameCtrl', function ($scope, $http) {
                     $scope.p6 = "";
                     break;
             }
-            
-            }
         }
-    });
+    }
+});
 
 
 
 //Controller voor welkomstscherm. Mogelijk goede plek voor Login?
-app.controller('homeCtrl', function ($scope, $http) {
+app.controller('homeCtrl', function ($scope, $http, $location, activeGameService) {
     $scope.gamedata = {}
     
 
@@ -90,35 +116,33 @@ app.controller('homeCtrl', function ($scope, $http) {
             players: []
         }
         $http.post('/gameSave', angular.toJson(newGame)).success(function () {
-            console.log("sending from save: " + angular.toJson(newGame));
             $scope.load();
         });
     }
 
-    //Load data of all games (not ideal for performance; should be 2 
-    //datasets in db, 1 with just title and id, other with full data)
+    //Load ids and titles of all games
     $scope.load = function () {
 
         console.log("load function");
         $http.get('/gamesLoad').
-          success(function (data, status, headers, config) {
-              
-              console.log(angular.toJson(data));
-              
+          success(function (data, status, headers, config) {   
               $scope.gamedata = data;
           }).
           error(function (data, status, headers, config) {
               console.log(status);
           });
     }
-
+    //Run load when opening page
     $scope.load();
 
+    //Load game with id in link
     $scope.gameLoad = function (gameid) {
         console.log("id: "+gameid);
         $http.get('/gameLoad/' + gameid).
             success(function (data, status, headers, config) {
-                $rootscope.activeGame = data;
+                console.log("loading game data: "+data);
+                activeGameService.setGameData(data);
+                $location.path("Game");
             }).
             error(function (data, status, headers, config) {
                 console.log(status);

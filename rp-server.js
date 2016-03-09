@@ -29,8 +29,7 @@ var Game = mongoose.model('Game', gameSchema);
 
 //GET
 app.get('/gamesLoad', function (req, res) {
-    Game.find(function (err, gamedata) {
-        console.log("server call load");
+    Game.find({}, '_id title', function (err, gamedata) {
         if (err) res.send(err);
         else res.json(gamedata);
     });
@@ -38,22 +37,21 @@ app.get('/gamesLoad', function (req, res) {
 
 app.get('/gameLoad/:gameid', function (req, res) {
     var gameid = req.params.gameid;
-    console.log(gameid);
-    //find game by ID
+    var o_id = new mongoose.Types.ObjectId(gameid);
+    Game.findOne({ '_id': o_id }, function (err, gamedata) {
+        if (err) res.send(err);
+        else res.json(gamedata);
+    });
 });
 
 //POST
 app.post('/gameSave', function (req, res) {
-    console.log("incoming at save" + req.body);
 
     var newGame = new Game({
         title: req.body.title,
         contentStory: req.body.story,
         contentPlayers: req.body.players
     })
-
-    console.log("server call save");
-    console.log(newGame);
 
     newGame.save(function (err) {
         if (err) res.send(err);
@@ -62,6 +60,13 @@ app.post('/gameSave', function (req, res) {
 });
 
 //PUT
-app.put('/gameUpdate', function (req, res) {
-    
+app.put('/gameUpdate/:gameid', function (req, res) {
+    console.log("app put data: " + req.body.story + req.body.players);
+    var gameid = req.params.gameid;
+    var o_id = new mongoose.Types.ObjectId(gameid);
+    var query = {_id: o_id };
+    Game.update(query, { contentStory: req.body.story, contentPlayers: req.body.players }, function (err) {
+        if (err) res.send(err);
+        res.status(200).end();
+    });
 })
