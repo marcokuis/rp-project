@@ -61,6 +61,7 @@ app.controller('gameCtrl', function ($scope, $http, activeGameService) {
         $http.put('/gameUpdate/' + dat._id, angular.toJson(dat))
             .success(function () {
                 console.log("Saved successfully");
+                activeGameService.setGameData(dat);
             })
             .error(function(){
                 console.log("Failed to save game");
