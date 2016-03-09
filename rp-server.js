@@ -36,7 +36,9 @@ app.get('/gamesLoad', function (req, res) {
     });
 });
 
-app.get('/gameLoad', function (req, res) {
+app.get('/gameLoad/:gameid', function (req, res) {
+    var gameid = req.params.gameid;
+    console.log(gameid);
     //find game by ID
 });
 

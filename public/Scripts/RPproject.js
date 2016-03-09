@@ -79,7 +79,7 @@ app.controller('gameCtrl', function ($scope, $http) {
 //Controller voor welkomstscherm. Mogelijk goede plek voor Login?
 app.controller('homeCtrl', function ($scope, $http) {
     $scope.gamedata = {}
-    $scope.load();
+    
 
     //Create new game. Title entered in prompt.
     $scope.createNewGame = function () {
@@ -102,9 +102,9 @@ app.controller('homeCtrl', function ($scope, $http) {
         console.log("load function");
         $http.get('/gamesLoad').
           success(function (data, status, headers, config) {
-              for (i in data) {
-                  console.log(angular.toJson(i));
-              }
+              
+              console.log(angular.toJson(data));
+              
               $scope.gamedata = data;
           }).
           error(function (data, status, headers, config) {
@@ -112,8 +112,11 @@ app.controller('homeCtrl', function ($scope, $http) {
           });
     }
 
-    $scope.gameLoad = function (id) {
-        $http.get('/gameLoad').
+    $scope.load();
+
+    $scope.gameLoad = function (gameid) {
+        console.log("id: "+gameid);
+        $http.get('/gameLoad/' + gameid).
             success(function (data, status, headers, config) {
                 $rootscope.activeGame = data;
             }).
