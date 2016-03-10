@@ -73,32 +73,9 @@ app.controller('gameCtrl', function ($scope, $http, activeGameService) {
     //Inhoud player area aan GM area toevoegen
     $scope.appendText = function (nr) {
         if ($scope.playerID === 'GM') {
-            switch (nr) {
-                case 1:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p1||'');
-                    $scope.p1 = "";
-                    break;
-                case 2:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p2||'');
-                    $scope.p2 = "";
-                    break;
-                case 3:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p3||'');
-                    $scope.p3 = "";
-                    break;
-                case 4:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p4||'');
-                    $scope.p4 = "";
-                    break;
-                case 5:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p5||'');
-                    $scope.p5 = "";
-                    break;
-                case 6:
-                    $scope.gamedata.story = $scope.gamedata.story + " " + ($scope.p6 || '');
-                    $scope.p6 = "";
-                    break;
-            }
+            var d = $scope.gamedata;
+            d.contentStory = d.contentStory + " " + (d.contentPlayers[nr-1]||'');
+            d.contentPlayers[nr-1] = "";
         }
     }
 });
