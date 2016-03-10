@@ -1,4 +1,5 @@
-// JavaScript source code
+
+// Controller for Home view
 
 angular.module('homeCtrl', [])
     .controller('homeCtrlr', function ($scope, $http, $location, activeGameService) {

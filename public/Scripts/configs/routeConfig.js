@@ -1,4 +1,6 @@
-// JavaScript source code
+
+// Handle redirects to the ng-view
+
 angular.module('routeConfig', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
