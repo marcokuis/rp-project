@@ -61,11 +61,11 @@ app.post('/gameSave', function (req, res) {
 
 //PUT
 app.put('/gameUpdate/:gameid', function (req, res) {
-    console.log("app put data: " + req.body.story + req.body.players);
+    console.log("app put data: " + req.body.contentStory + req.body.contentPlayers);
     var gameid = req.params.gameid;
     var o_id = new mongoose.Types.ObjectId(gameid);
     var query = {_id: o_id };
-    Game.update(query, { contentStory: req.body.story, contentPlayers: req.body.players }, function (err) {
+    Game.update(query, { contentStory: req.body.contentStory, contentPlayers: req.body.contentPlayers }, function (err) {
         if (err) res.send(err);
         res.status(200).end();
     });
