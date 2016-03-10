@@ -45,8 +45,8 @@ app.service('activeGameService', function() {
 //Controller voor Game scherm
 app.controller('gameCtrl', function ($scope, $http, activeGameService) { 
     $scope.gamedata = {};
-    $scope.gamedata.players = [];
     
+    //load game data into textareas
     $scope.load = function () {
         $scope.gamedata = activeGameService.getGameData();
         console.log("loaded game data: " + angular.toJson($scope.gamedata));
@@ -56,8 +56,6 @@ app.controller('gameCtrl', function ($scope, $http, activeGameService) {
 
     //Data opslaan (post request naar URL gameSave --> rp-server luistert)
     $scope.save = function () {
-
-        //$scope.gamedata.players = [$scope.p1, $scope.p2, $scope.p3, $scope.p4, $scope.p5, $scope.p6];
         dat = $scope.gamedata;
         console.log("saving gamedata: " + angular.toJson($scope.gamedata));
         $http.put('/gameUpdate/' + dat._id, angular.toJson(dat))
