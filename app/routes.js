@@ -1,9 +1,10 @@
 // JavaScript source code
 var Game = require('./model/gameModel');
+var User = require('./model/userModel');
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 
 module.exports = function (app) {
-    console.log("routes module active");
 
     //GET
     app.get('/gamesLoad', function (req, res) {
@@ -22,6 +23,14 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/userLogin/:name', function (req, res) {
+        
+        Game.findOne({ 'username': req.params.name }, function (err, userdata) {
+            if (err) res.send(err);
+            else res.json(userdata);
+        });
+    });
+
     //POST
     app.post('/gameSave', function (req, res) {
 
@@ -36,6 +45,50 @@ module.exports = function (app) {
             res.status(200).end();
         });
     });
+
+    app.post('/newUser', function (req, res) {
+        console.log("calling new user");
+        var newUser = new User({
+            username: req.body.name,
+            password: req.body.pw
+        })
+        newUser.gameList = {};
+        /*if (!req.body.username || !req.body.password) {
+            console.log("name or pw not accepted");
+            res.send('Username and password both required');
+            return;
+        }*/
+        var pwHash = crypto.createHash("md5")
+              .update(req.body.pw)
+              .digest("hex");
+        console.log("pwhash " + pwHash);
+        newUser.password = pwHash;
+
+        newUser.save(function (err) {
+            if (err) res.send(err);
+            res.status(200).end();
+        });
+
+    })
+
+
+    app.post('/loginUser', function (req, res) {
+        Game.findOne({ 'username': req.body.name }, function (err, userdata) {
+            var pwHash = crypto.createHash("md5")
+              .update(req.body.pw)
+              .digest("hex");
+            console.log("login compare " + userdata.password + pwHash);
+            if (userdata.password !== pwHash) {
+                res.send("Invalid Password!");
+            }
+            else{}
+
+
+            if (err) { res.send(err); }
+            else { res.json(userdata); }
+        });
+    });
+
 
     //PUT
     app.put('/gameUpdate/:gameid', function (req, res) {

@@ -39,7 +39,7 @@ angular.module('homeCtrl', [])
             console.log("id: "+gameid);
             $http.get('/gameLoad/' + gameid).
                 success(function (data, status, headers, config) {
-                    console.log("loading game data: "+data);
+                    console.log("loading game data: "+angular.toJson(data));
                     activeGameService.setGameData(data);
                     $location.path("Game");
                 }).

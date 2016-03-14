@@ -1,70 +1,52 @@
-﻿<div class="page-container" id="myPageContainer">
+﻿
+<div class="container" id="myContainer">
+    <div class="row row-offcanvas row-offcanvas-left">
 
-    <!-- top navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <input class="navbar-btn" type="button" ng-click="newUser()" value="Sign Up" />
-                <input class="navbar-btn" type="button" ng-click="login()" value="Log In" />
-                <a class="navbar-brand" href="#">Role With It</a>
-            </div>
+        <!-- sidebar -->
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <ul class="nav">
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#Game">Game</a></li>
+                <li><input ng-model="playerID" placeholder="Player number or 'GM'" id="playerNr" /></li>
+                <li><input type="button" ng-click="save()" value="Save Game"/></li>
+                <li><textarea id="Notes" placeholder="Player can keep notes here."></textarea></li>
+                <li><textarea id="Equipment" placeholder="Player has a list of equipment here."></textarea></li>
+                <li><div id="sidebarBlank"></div></li>
+            </ul>
+
         </div>
-    </div>
 
-    <div class="container" id="myContainer">
-        <div class="row row-offcanvas row-offcanvas-left">
+        <!-- main area -->
+        <div class="col-xs-12 col-sm-9 banner"><img src="./Content/Images/banner.jpg" class="img-responsive" alt="banner" width="800" height="170"></div>
+        <div class="col-xs-12 col-sm-9" align="center"><h1>{{gamedata.title}}</h1></div>
+        <div class="col-xs-12 col-sm-9">
+            <textarea id="GMstory" ng-model="gamedata.contentStory" ng-readonly="playerID != 'GM'" placeholder="Main Story / GM area">{{gamedata.contentStory}}</textarea>
+        </div>
 
-            <!-- sidebar -->
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                <ul class="nav">
-                    <li><a href="#Home">Home</a></li>
-                    <li><a href="#Game">Game</a></li>
-                    <li><input ng-model="playerID" placeholder="Player number or 'GM'" id="playerNr" /></li>
-                    <li><input type="button" ng-click="save()" value="Save Game"/></li>
-                    <li><textarea id="Notes" placeholder="Player can keep notes here."></textarea></li>
-                    <li><textarea id="Equipment" placeholder="Player has a list of equipment here."></textarea></li>
-                    <li><div id="sidebarBlank"></div></li>
-                </ul>
+        <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(1)">
+            <textarea class="playerEntry" id="Player1" 
+                        ng-model="gamedata.contentPlayers[0]" ng-readonly="playerID != '1'" placeholder="Player 1">{{gamedata.contentPlayers[0]}}</textarea>
+        </div>
+        <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(2)">
+            <textarea class="playerEntry" id="Player2"
+                        ng-model="gamedata.contentPlayers[1]" ng-readonly="playerID != '2'" placeholder="Player 2">{{gamedata.contentPlayers[1]}}</textarea>
+        </div>
+        <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(3)">
+            <textarea class="playerEntry" id="Player3"
+                        ng-model="gamedata.contentPlayers[2]" ng-readonly="playerID != '3'" placeholder="Player 3">{{gamedata.contentPlayers[2]}}</textarea>
+        </div>
+        <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(4)">
+            <textarea class="playerEntry" id="Player4" 
+                        ng-model="gamedata.contentPlayers[3]" ng-readonly="playerID != '4'" placeholder="Player 4">{{gamedata.contentPlayers[3]}}</textarea>
+        </div>
+        <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(5)">
+            <textarea class="playerEntry" id="Player5" 
+                        ng-model="gamedata.contentPlayers[4]" ng-readonly="playerID != '5'" placeholder="Player 5">{{gamedata.contentPlayers[4]}}</textarea>
+        </div>
+        <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(6)">
+            <textarea class="playerEntry" id="Player6" 
+                        ng-model="gamedata.contentPlayers[5]" ng-readonly="playerID != '6'" placeholder="Player 6">{{gamedata.contentPlayers[5]}}</textarea>
+        </div>
 
-            </div>
-
-            <!-- main area -->
-            <div class="col-xs-12 col-sm-9 banner"><img src="./Content/Images/banner.jpg" class="img-responsive" alt="banner" width="800" height="170"></div>
-            <div class="col-xs-12 col-sm-9" align="center"><h1>{{gamedata.title}}</h1></div>
-            <div class="col-xs-12 col-sm-9">
-                <textarea id="GMstory" ng-model="gamedata.contentStory" ng-readonly="playerID != 'GM'" placeholder="Main Story / GM area">{{gamedata.contentStory}}</textarea>
-            </div>
-
-            <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(1)">
-                <textarea class="playerEntry" id="Player1" 
-                          ng-model="gamedata.contentPlayers[0]" ng-readonly="playerID != '1'" placeholder="Player 1">{{gamedata.contentPlayers[0]}}</textarea>
-            </div>
-            <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(2)">
-                <textarea class="playerEntry" id="Player2"
-                          ng-model="gamedata.contentPlayers[1]" ng-readonly="playerID != '2'" placeholder="Player 2">{{gamedata.contentPlayers[1]}}</textarea>
-            </div>
-            <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(3)">
-                <textarea class="playerEntry" id="Player3"
-                          ng-model="gamedata.contentPlayers[2]" ng-readonly="playerID != '3'" placeholder="Player 3">{{gamedata.contentPlayers[2]}}</textarea>
-            </div>
-            <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(4)">
-                <textarea class="playerEntry" id="Player4" 
-                          ng-model="gamedata.contentPlayers[3]" ng-readonly="playerID != '4'" placeholder="Player 4">{{gamedata.contentPlayers[3]}}</textarea>
-            </div>
-            <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(5)">
-                <textarea class="playerEntry" id="Player5" 
-                          ng-model="gamedata.contentPlayers[4]" ng-readonly="playerID != '5'" placeholder="Player 5">{{gamedata.contentPlayers[4]}}</textarea>
-            </div>
-            <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(6)">
-                <textarea class="playerEntry" id="Player6" 
-                          ng-model="gamedata.contentPlayers[5]" ng-readonly="playerID != '6'" placeholder="Player 6">{{gamedata.contentPlayers[5]}}</textarea>
-            </div>
-
-        </div><!-- /.col-xs-12 main -->
-    </div><!--/.row-->
-</div><!--/.container-->
+    </div><!-- /.col-xs-12 main -->
+</div><!--/.row-->

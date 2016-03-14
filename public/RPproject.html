@@ -10,13 +10,47 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="./Scripts/configs/routeConfig.js"></script>
     <script src="./Scripts/services/gameLoadService.js"></script>
+    <script src="./Scripts/services/sessionService.js"></script>
     <script src="./Scripts/controllers/homeCtrl.js"></script>
     <script src="./Scripts/controllers/gameCtrl.js"></script>
+    <script src="./Scripts/controllers/userCtrl.js"></script>
     <script src="./Scripts/RPproject.js"></script>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
     <link href="./Content/Style/RPproject.css" type="text/css" rel="stylesheet" />
 </head>
-<body ng-view>
-    
+<body>
+    <div class="page-container" id="myPageContainer" ng-controller="userCtrlr">
+        <!-- top navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Role With It</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><input type="text" placeholder="Username" ng-model="user.name"/></li>
+                                <li><input type="password" placeholder="Password" ng-model="user.pw"/></li>
+                                <li><input type="button" value="Sign Up" ng-click="createNewUser()">
+                                <input type="button" value="Log In"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div ng-view>
+
+        </div>
+    </div>
 </body>
 </html>

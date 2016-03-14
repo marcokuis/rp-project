@@ -11,3 +11,4 @@ var gameSchema = new mongoose.Schema({
 
 //model van bovenstaand schema
 module.exports = mongoose.model('Game', gameSchema);
+

@@ -8,11 +8,13 @@ angular.module('gameLoadService',[])
         // Set active game data in memory
         var setGameData = function(curGame) {
             gameData = curGame;
+            console.log("activeGameService set " + gameData);
         };
 
         // Return active game data 
         var getGameData = function(){
             return gameData;
+            console.log("activeGameService return " + gameData);
         };
 
         return {
