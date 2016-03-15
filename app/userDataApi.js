@@ -16,12 +16,11 @@ module.exports = function (app) {
 
     //POST
     app.post('/newUser', function (req, res) {
-        console.log("calling new user");
         var newUser = new User({
             username: req.body.name,
-            password: req.body.pw
+            password: req.body.pw,
+            games: []
         })
-        newUser.gameList = {};
         /*if (!req.body.username || !req.body.password) {
             console.log("name or pw not accepted");
             res.send('Username and password both required');
@@ -30,7 +29,6 @@ module.exports = function (app) {
         var pwHash = crypto.createHash("md5")
               .update(req.body.pw)
               .digest("hex");
-        console.log("pwhash " + pwHash);
         newUser.password = pwHash;
 
         newUser.save(function (err) {
@@ -40,12 +38,10 @@ module.exports = function (app) {
     })
     
     app.post('/loginUser', function (req, res) {
-        console.log("login user called with " + req.body.name);
         User.findOne({ 'username': req.body.name }, function (err, userdata) {
             var pwHash = crypto.createHash("md5")
               .update(req.body.pw)
               .digest("hex");
-            console.log("login compare " + userdata + pwHash);
             if (userdata.password !== pwHash) {
                 res.status(403).send('Incorrect Password');;
             }
@@ -58,4 +54,29 @@ module.exports = function (app) {
 
 
     //PUT
+    app.put('/userJoin/:userid', function (req, res) {
+        console.log("app user join data: " + JSON.stringify(req.body));
+        var userid = req.params.userid;
+        var u_id = new mongoose.Types.ObjectId(userid);
+        var query = { _id: u_id };
+        User.findOne(query).exec(function (err, tempuser) {
+            console.log(JSON.stringify(tempuser));
+            if (tempuser.games == null) {
+                console.log("creating games list");
+                tempuser.games = [req.body];
+                tempuser.x = 5;
+                tempuser.shoes = "red";
+                console.log("created games list");
+            }
+            else {
+                console.log("adding to games list");
+                tempuser.games.push(req.body);
+            }
+            console.log(JSON.stringify(tempuser));
+            tempuser.save(function (err) {
+                if (err) { res.send(err); }
+                else { res.status(200).end(); }
+            });
+        });
+    });
 }
