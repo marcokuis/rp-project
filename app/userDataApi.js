@@ -55,24 +55,11 @@ module.exports = function (app) {
 
     //PUT
     app.put('/userJoin/:userid', function (req, res) {
-        console.log("app user join data: " + JSON.stringify(req.body));
         var userid = req.params.userid;
         var u_id = new mongoose.Types.ObjectId(userid);
         var query = { _id: u_id };
         User.findOne(query).exec(function (err, tempuser) {
-            console.log(JSON.stringify(tempuser));
-            if (tempuser.games == null) {
-                console.log("creating games list");
-                tempuser.games = [req.body];
-                tempuser.x = 5;
-                tempuser.shoes = "red";
-                console.log("created games list");
-            }
-            else {
-                console.log("adding to games list");
-                tempuser.games.push(req.body);
-            }
-            console.log(JSON.stringify(tempuser));
+            tempuser.games.push(req.body);
             tempuser.save(function (err) {
                 if (err) { res.send(err); }
                 else { res.status(200).end(); }

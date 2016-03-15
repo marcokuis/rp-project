@@ -1,8 +1,8 @@
 
 // Controller for User login
 
-angular.module('userCtrl', [])
-    .controller('userCtrlr', function ($scope, $http, userSessionService) {
+angular.module('userCtrl', ['ngStorage'])
+    .controller('userCtrlr', function ($scope, $http, $localStorage, userSessionService) {
         $scope.loggedIn = false;
         $scope.activeUser = {};
 
@@ -34,6 +34,7 @@ angular.module('userCtrl', [])
                          success(function (data, status, headers, config) {
                              console.log("user logged in: "+angular.toJson(data));
                              userSessionService.setUserData(data);
+                             $localStorage.userdata = data;
                              $scope.loggedIn = true;
                              $scope.loadUserData();
                          }).

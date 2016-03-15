@@ -5,12 +5,18 @@ angular.module('gameCtrl', [])
     .controller('gameCtrlr', function ($scope, $http, activeGameService, userSessionService) {
         $scope.gamedata = {};
         $scope.userdata = null;
+        $scope.playerID = '';
 
         $scope.userLoad = function(){
             var player = userSessionService.getUserData();
             if (Object.keys(player).length>0) {
                 $scope.userdata = userSessionService.getUserData()
                 console.log("opened game with " + angular.toJson($scope.userdata));
+            }
+            angular.forEach($scope.userdata.games, function(value){
+                if(value.id == gamedata._id){
+                    playerID = value.role;
+                }
             }
         }
         $scope.userLoad();
@@ -47,15 +53,20 @@ angular.module('gameCtrl', [])
             var role = prompt("GM or player number");
             var dat = $scope.userdata;
             var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": "", "notes": "" };
-
-            console.log("join game data: " +  angular.toJson(gameInfo));
             $http.put('/userJoin/' + dat._id, angular.toJson(gameInfo))
                 .success(function () {
-                    console.log("Saved successfully");
-                    //activeGameService.setGameData(dat);
+                    console.log("Player joined game");
+                    $http.get('/userLogin/' + dat.username)
+                        .success(function (data, status, headers, config) {
+                             userSessionService.setUserData(data);
+                             }).
+                         error(function (data, status, headers, config) {
+                             console.log(status);
+                         });
+                    $scope.userLoad();
                 })
                 .error(function () {
-                    console.log("Failed to save game");
+                    console.log("Failed to join game");
                 });
         }
     });

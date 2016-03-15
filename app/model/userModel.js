@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 //schema hoe game data verwerkt moet worden in mongo
 var userSchema = new mongoose.Schema({
     username: { type: String, default: "" },
-    password: { type: String, default: "" }
+    password: { type: String, default: "" },
+    games: []
 
 });
 
