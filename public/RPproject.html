@@ -38,7 +38,7 @@
                     <ul class="nav navbar-nav navbar-right" ng-hide="loggedIn">
                         
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
                             <ul class="dropdown-menu" id="loginMenu">
                                 <li><input type="text" placeholder="Username" ng-model="user.name" /></li>
                                 <li><input type="password" placeholder="Password" ng-model="user.pw" /></li>
@@ -49,8 +49,10 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul ng-show="loggedIn">
-                        <li>Logged in as:</li>
+                    <ul class="nav navbar-nav navbar-right" ng-show="loggedIn">
+                        <li class="nav navbar-text">Logged in as:</li>
+                        <li class ="nav navbar-text">{{activeUser.username}}</li>
+                        <li class="nav navbar-nav"><a ng-click="logoutUser()">Logout</a></li>
                     </ul>
                 </div>
             </div>

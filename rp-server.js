@@ -15,4 +15,5 @@ app.listen(3000, function () {
     console.log('todo app on port 3000');
 });
 
-require('./app/routes')(app);
+require('./app/gameDataApi')(app);
+require('./app/userDataApi')(app);

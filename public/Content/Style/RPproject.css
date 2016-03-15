@@ -1,6 +1,10 @@
 body {
   padding-top: 51px;  
 }
+a{
+    cursor:pointer;
+}
+
 .text-center {
   padding-top: 20px;
 }
