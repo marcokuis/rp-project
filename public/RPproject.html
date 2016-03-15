@@ -32,17 +32,25 @@
                     <a class="navbar-brand" href="#">Role With It</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-left">
                         <li class="active"><a href="#">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" ng-hide="loggedIn">
+                        
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><input type="text" placeholder="Username" ng-model="user.name"/></li>
-                                <li><input type="password" placeholder="Password" ng-model="user.pw"/></li>
-                                <li><input type="button" value="Sign Up" ng-click="createNewUser()">
-                                <input type="button" value="Log In"></li>
+                            <ul class="dropdown-menu" id="loginMenu">
+                                <li><input type="text" placeholder="Username" ng-model="user.name" /></li>
+                                <li><input type="password" placeholder="Password" ng-model="user.pw" /></li>
+                                <li>
+                                    <button ng-click="createNewUser()">Sign Up</button>
+                                    <button ng-click="loginUser()">Log In</button>
+                                </li>
                             </ul>
                         </li>
+                    </ul>
+                    <ul ng-show="loggedIn">
+                        <li>Logged in as:</li>
                     </ul>
                 </div>
             </div>

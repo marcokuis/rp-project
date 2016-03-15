@@ -25,7 +25,7 @@ module.exports = function (app) {
 
     app.get('/userLogin/:name', function (req, res) {
         
-        Game.findOne({ 'username': req.params.name }, function (err, userdata) {
+        User.findOne({ 'username': req.params.name }, function (err, userdata) {
             if (err) res.send(err);
             else res.json(userdata);
         });
@@ -73,19 +73,19 @@ module.exports = function (app) {
 
 
     app.post('/loginUser', function (req, res) {
-        Game.findOne({ 'username': req.body.name }, function (err, userdata) {
+        console.log("login user called with " + req.body.name);
+        User.findOne({ 'username': req.body.name }, function (err, userdata) {
             var pwHash = crypto.createHash("md5")
               .update(req.body.pw)
               .digest("hex");
-            console.log("login compare " + userdata.password + pwHash);
+            console.log("login compare " + userdata + pwHash);
             if (userdata.password !== pwHash) {
-                res.send("Invalid Password!");
+                res.status(403).send('Incorrect Password');;
             }
-            else{}
-
-
-            if (err) { res.send(err); }
-            else { res.json(userdata); }
+            else {
+                if (err) { res.send(err); }
+                else { res.json(userdata); }
+            }
         });
     });
 
