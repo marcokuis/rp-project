@@ -37,13 +37,23 @@ module.exports = function (app) {
         });
     })
     
+    //PROBLEM AREA PROBLEM AREA
     app.post('/loginUser', function (req, res) {
+        console.log(req.body.pw + req.body.name);
+        if (typeof(req.body.pw) === "undefined" | typeof(req.body.name) === "undefined") {
+            console.log('No Username or Password');
+                res.status(404).end();
+        }
         User.findOne({ 'username': req.body.name }, function (err, userdata) {
             var pwHash = crypto.createHash("md5")
-              .update(req.body.pw)
-              .digest("hex");
-            if (userdata.password !== pwHash) {
-                res.status(403).send('Incorrect Password');;
+                .update(req.body.pw)
+                .digest("hex");
+
+            if (userdata === null){
+                res.status(404).send('Incorrect Username');
+            }
+            else if (userdata.password !== pwHash) {
+                res.status(401).send('Incorrect Password');
             }
             else {
                 if (err) { res.send(err); }

@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var gameSchema = new mongoose.Schema({
     title: { type: String, default: "" },
     contentStory: { type: String, default: "" },
-    contentPlayers: { type: Array, default: [] }
+    contentPlayers: { type: Array, default: [] },
+    positions: { type: Array, default: [] }
 });
 
 //model van bovenstaand schema

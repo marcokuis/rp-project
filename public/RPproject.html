@@ -41,8 +41,8 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown">Login<span class="caret"></span></a>
                             <ul class="dropdown-menu" id="loginMenu">
-                                <li><input type="text" placeholder="Username" ng-model="user.name" /></li>
-                                <li><input type="password" placeholder="Password" ng-model="user.pw" /></li>
+                                <li><input type="text" required placeholder="Username" ng-model="user.name" /></li>
+                                <li><input type="password" required placeholder="Password" ng-model="user.pw" /></li>
                                 <li>
                                     <button ng-click="createNewUser()">Sign Up</button>
                                     <button ng-click="loginUser()">Log In</button>

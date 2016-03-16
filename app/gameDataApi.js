@@ -27,7 +27,8 @@ module.exports = function (app) {
         var newGame = new Game({
             title: req.body.title,
             contentStory: req.body.story,
-            contentPlayers: req.body.players
+            contentPlayers: req.body.players,
+            positions: ["GM", "1", "2", "3", "4", "5", "6"]
         })
 
         newGame.save(function (err) {

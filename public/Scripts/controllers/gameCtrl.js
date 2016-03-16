@@ -70,25 +70,34 @@ angular.module('gameCtrl', ['ngStorage'])
         
         //player wants to join game
         $scope.joinGame = function () {
-            var role = prompt("GM or player number");
-            var dat = $scope.userdata;
-            var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": "", "notes": "" };
-            $http.put('/userJoin/' + dat._id, angular.toJson(gameInfo))
-                .success(function () {
-                    console.log("Player joined game");
-                    $http.get('/userLogin/' + dat.username)
-                        .success(function (data, status, headers, config) {
-                            userSessionService.setUserData(data);
-                            $scope.userLoad();
-                             }).
-                         error(function (data, status, headers, config) {
-                             console.log(status);
-                         });
-                    
-                })
-                .error(function () {
-                    console.log("Failed to join game");
+            var role = $scope.selectRole;
+            console.log(role);
+            if (role) {
+                angular.forEach($scope.gamedata.positions, function (item, index) {
+                    if (item === role) {
+                        $scope.gamedata.positions.splice(index, 1);
+                    }
                 });
+                var dat = $scope.userdata;
+                var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": "", "notes": "" };
+                $http.put('/userJoin/' + dat._id, angular.toJson(gameInfo))
+                    .success(function () {
+                        console.log("Player joined game");
+                        $http.get('/userLogin/' + dat.username)
+                            .success(function (data, status, headers, config) {
+                                userSessionService.setUserData(data);
+                                $scope.userLoad();
+                            }).
+                             error(function (data, status, headers, config) {
+                                 console.log(status);
+                             });
+
+                    })
+                    .error(function () {
+                        console.log("Failed to join game");
+                    });
+            }
+            else{console.log("no role selected")}
         }
 
         $rootScope.$on("logChange", function () {
