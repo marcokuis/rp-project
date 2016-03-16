@@ -9,8 +9,8 @@
                 <li><a href="#Game">Game</a></li>
                 <li ng-show="recruiting"><select ng-model="selectRole" ng-options="item for item in gamedata.positions"></select><button ng-click="joinGame()">Join Game</button></li>
                 <li ng-show="playerID"><input type="button" ng-click="save()" value="Save Game" /></li>
-                <li ng-show="playerID"><textarea id="Notes" placeholder="Player can keep notes here."></textarea></li>
-                <li ng-show="playerID"><textarea id="Equipment" placeholder="Player has a list of equipment here."></textarea></li>
+                <li ng-show="playerID"><textarea id="Notes" placeholder="Player can keep notes here.">{{notes}}</textarea></li>
+                <li ng-show="playerID"><textarea id="Equipment" placeholder="Player has a list of equipment here.">{{equipment}}</textarea></li>
                 <li><div id="sidebarBlank"></div></li>
             </ul>
 

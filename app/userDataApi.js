@@ -37,29 +37,31 @@ module.exports = function (app) {
         });
     })
     
-    //PROBLEM AREA PROBLEM AREA
+    
     app.post('/loginUser', function (req, res) {
         console.log(req.body.pw + req.body.name);
         if (typeof(req.body.pw) === "undefined" | typeof(req.body.name) === "undefined") {
             console.log('No Username or Password');
                 res.status(404).end();
         }
-        User.findOne({ 'username': req.body.name }, function (err, userdata) {
-            var pwHash = crypto.createHash("md5")
-                .update(req.body.pw)
-                .digest("hex");
+        else{
+            User.findOne({ 'username': req.body.name }, function (err, userdata) {
+                var pwHash = crypto.createHash("md5")
+                    .update(req.body.pw)
+                    .digest("hex");
 
-            if (userdata === null){
-                res.status(404).send('Incorrect Username');
-            }
-            else if (userdata.password !== pwHash) {
-                res.status(401).send('Incorrect Password');
-            }
-            else {
-                if (err) { res.send(err); }
-                else { res.status(200).end(); }
-            }
-        });
+                if (userdata === null){
+                    res.status(404).send('Incorrect Username');
+                }
+                else if (userdata.password !== pwHash) {
+                    res.status(401).send('Incorrect Password');
+                }
+                else {
+                    if (err) { res.send(err); }
+                    else { res.status(200).end(); }
+                }
+            });
+        }
     });
 
 
@@ -74,6 +76,17 @@ module.exports = function (app) {
                 if (err) { res.send(err); }
                 else { res.status(200).end(); }
             });
+        });
+    });
+    
+    app.put('/notesEquipmentUpdate/:userid', function (req,res){
+        var userid = req.params.userid;
+        var u_id = new mongoose.Types.ObjectId(userid);
+        var query = { _id: u_id };
+        User.update(query, { games: req.body.games }, function (err) {
+            if (err) res.send(err);
+            res.status(200).end();
+            
         });
     });
 }

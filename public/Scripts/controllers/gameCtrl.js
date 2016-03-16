@@ -49,10 +49,19 @@ angular.module('gameCtrl', ['ngStorage'])
         //Save data to rpdb database
         $scope.save = function () {
             var dat = $scope.gamedata;
+            var udat = $scope.userdata;
+            udat.gameid = dat._id;
             $http.put('/gameUpdate/' + dat._id, angular.toJson(dat))
                 .success(function () {
                     console.log("Saved successfully");
                     activeGameService.setGameData(dat);
+                })
+                .error(function () {
+                    console.log("Failed to save game");
+                });
+            $http.put('/notesEquipmentUpdate/' + udat._id, angular.toJson(udat))
+                .success(function () {
+                    console.log("Saved successfully");
                 })
                 .error(function () {
                     console.log("Failed to save game");

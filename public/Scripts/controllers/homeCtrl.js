@@ -10,9 +10,7 @@ angular.module('homeCtrl', [])
         $scope.createNewGame = function () {
             var newTitle = prompt("Title of the new game: ");
             var newGame = {
-                title: newTitle,
-                story: "",
-                players: []
+                title: newTitle
             }
             $http.post('/gameSave', angular.toJson(newGame)).success(function () {
                 $scope.load();
