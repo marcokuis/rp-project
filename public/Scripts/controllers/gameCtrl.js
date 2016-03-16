@@ -1,31 +1,50 @@
 
 // Controller for Game view
 
-angular.module('gameCtrl', [])
-    .controller('gameCtrlr', function ($scope, $http, activeGameService, userSessionService) {
+angular.module('gameCtrl', ['ngStorage'])
+    .controller('gameCtrlr', function ($scope, $rootScope, $http, $localStorage, activeGameService, userSessionService) {
         $scope.gamedata = {};
         $scope.userdata = null;
         $scope.playerID = '';
-
-        $scope.userLoad = function(){
-            var player = userSessionService.getUserData();
-            if (Object.keys(player).length>0) {
-                $scope.userdata = userSessionService.getUserData()
-                console.log("opened game with " + angular.toJson($scope.userdata));
-            }
-            angular.forEach($scope.userdata.games, function(value){
-                if(value.id == gamedata._id){
-                    playerID = value.role;
-                }
-            }
-        }
-        $scope.userLoad();
-
+        $scope.recruiting = false;
+        
         //load game data into textareas
         $scope.load = function () {
             $scope.gamedata = activeGameService.getGameData();
         }
-        $scope.load();
+        $scope.load();                                                      //load game data from game service upon page opening
+
+        //load data of currently logged in user
+        $scope.userLoad = function () {
+            $scope.recruiting = false;                                      //default: not recruiting
+            var player = userSessionService.getUserData();
+            console.log("player: " + angular.toJson(player));
+            if (Object.keys(player).length > 0) {                           //check if player object not empty
+                $scope.userdata = userSessionService.getUserData()          
+                if ($scope.userdata.games.length > 0) {                     //check whether player in any games
+                    angular.forEach($scope.userdata.games, function (value) {   //loop through games
+                        if (value.id == $scope.gamedata._id) {              //check whether any of them are current game
+                            $scope.playerID = value.role;                   //set player role (GM or 1-6)
+                        }
+                        else {
+                            $scope.recruiting = true;                       //if player not in current game: recruiting
+                        }
+                    });
+                }
+                else {
+                    $scope.recruiting = true;                               //if player not in any game: recruiting
+                }
+            }
+            else {
+                console.log("userload");
+                $scope.userdata = null;
+                $scope.playerID = '';
+                $scope.recruiting = false;
+            }
+        }
+
+        $scope.userLoad();                                                  //load user data upon page opening
+
 
         //Save data to rpdb database
         $scope.save = function () {
@@ -48,7 +67,8 @@ angular.module('gameCtrl', [])
                 d.contentPlayers[nr - 1] = "";
             }
         }
-
+        
+        //player wants to join game
         $scope.joinGame = function () {
             var role = prompt("GM or player number");
             var dat = $scope.userdata;
@@ -58,15 +78,21 @@ angular.module('gameCtrl', [])
                     console.log("Player joined game");
                     $http.get('/userLogin/' + dat.username)
                         .success(function (data, status, headers, config) {
-                             userSessionService.setUserData(data);
+                            userSessionService.setUserData(data);
+                            $scope.userLoad();
                              }).
                          error(function (data, status, headers, config) {
                              console.log(status);
                          });
-                    $scope.userLoad();
+                    
                 })
                 .error(function () {
                     console.log("Failed to join game");
                 });
         }
+
+        $rootScope.$on("logChange", function () {
+            console.log("receiving broadcast");
+            $scope.userLoad();
+        });
     });

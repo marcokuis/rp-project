@@ -7,10 +7,10 @@
             <ul class="nav">
                 <li><a href="#Home">Home</a></li>
                 <li><a href="#Game">Game</a></li>
-                <li ng-show="userdata"><button ng-click="joinGame()">Join Game</button></li>
-                <li ng-show="userdata"><input type="button" ng-click="save()" value="Save Game" /></li>
-                <li ng-show="userdata"><textarea id="Notes" placeholder="Player can keep notes here."></textarea></li>
-                <li ng-show="userdata"><textarea id="Equipment" placeholder="Player has a list of equipment here."></textarea></li>
+                <li ng-show="recruiting"><button ng-click="joinGame()">Join Game</button></li>
+                <li ng-show="playerID"><input type="button" ng-click="save()" value="Save Game" /></li>
+                <li ng-show="playerID"><textarea id="Notes" placeholder="Player can keep notes here."></textarea></li>
+                <li ng-show="playerID"><textarea id="Equipment" placeholder="Player has a list of equipment here."></textarea></li>
                 <li><div id="sidebarBlank"></div></li>
             </ul>
 

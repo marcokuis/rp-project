@@ -2,7 +2,7 @@
 // Controller for Home view
 
 angular.module('homeCtrl', [])
-    .controller('homeCtrlr', function ($scope, $http, $location, activeGameService) {
+    .controller('homeCtrlr', function ($scope, $rootScope, $http, $location, activeGameService) {
         $scope.gamedata = {}
     
 
@@ -39,7 +39,6 @@ angular.module('homeCtrl', [])
             console.log("id: "+gameid);
             $http.get('/gameLoad/' + gameid).
                 success(function (data, status, headers, config) {
-                    console.log("loading game data: "+angular.toJson(data));
                     activeGameService.setGameData(data);
                     $location.path("Game");
                 }).

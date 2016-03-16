@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RPprojectSolution", "RPprojectSolution", "{94DD5A88-D6BC-499C-9FAB-1FCD5284D7AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JS", "JS", "{FF5C3AA9-FDBC-4902-A346-305F58D7D60D}"
+	ProjectSection(SolutionItems) = preProject
+		public\Scripts\controllers\gameCtrl.js = public\Scripts\controllers\gameCtrl.js
+		public\Scripts\services\gameLoadService.js = public\Scripts\services\gameLoadService.js
+		public\Scripts\controllers\homeCtrl.js = public\Scripts\controllers\homeCtrl.js
+		public\Scripts\configs\routeConfig.js = public\Scripts\configs\routeConfig.js
+		rp-server.js = rp-server.js
+		public\Scripts\RPproject.js = public\Scripts\RPproject.js
+		public\Scripts\services\sessionService.js = public\Scripts\services\sessionService.js
+		public\Scripts\controllers\userCtrl.js = public\Scripts\controllers\userCtrl.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HTML", "HTML", "{0147C60F-0E32-4CD9-A609-8AB00A384131}"
+	ProjectSection(SolutionItems) = preProject
+		public\partials\gameTemplate.html = public\partials\gameTemplate.html
+		public\RPproject.html = public\RPproject.html
+		public\partials\welcomeTemplate.html = public\partials\welcomeTemplate.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{D053ACF3-3388-4328-8439-76BA5E9D4A50}"
+	ProjectSection(SolutionItems) = preProject
+		public\Content\Style\RPproject.css = public\Content\Style\RPproject.css
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF5C3AA9-FDBC-4902-A346-305F58D7D60D} = {94DD5A88-D6BC-499C-9FAB-1FCD5284D7AE}
+		{0147C60F-0E32-4CD9-A609-8AB00A384131} = {94DD5A88-D6BC-499C-9FAB-1FCD5284D7AE}
+		{D053ACF3-3388-4328-8439-76BA5E9D4A50} = {94DD5A88-D6BC-499C-9FAB-1FCD5284D7AE}
+	EndGlobalSection
+EndGlobal

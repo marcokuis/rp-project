@@ -2,7 +2,7 @@
 // Controller for User login
 
 angular.module('userCtrl', ['ngStorage'])
-    .controller('userCtrlr', function ($scope, $http, $localStorage, userSessionService) {
+    .controller('userCtrlr', function ($scope, $rootScope,  $http, $location, userSessionService) {
         $scope.loggedIn = false;
         $scope.activeUser = {};
 
@@ -20,6 +20,7 @@ angular.module('userCtrl', ['ngStorage'])
             });
         }
 
+        //Log in existing user
         $scope.loginUser = function () {
             var existingUser = {
                 name: $scope.user.name,
@@ -32,11 +33,9 @@ angular.module('userCtrl', ['ngStorage'])
                  success(function (){
                      $http.get('/userLogin/' + existingUser.name).
                          success(function (data, status, headers, config) {
-                             console.log("user logged in: "+angular.toJson(data));
                              userSessionService.setUserData(data);
-                             $localStorage.userdata = data;
-                             $scope.loggedIn = true;
                              $scope.loadUserData();
+                             $rootScope.$broadcast("logChange");
                          }).
                          error(function (data, status, headers, config) {
                              console.log(status);
@@ -44,14 +43,19 @@ angular.module('userCtrl', ['ngStorage'])
                  });
         }
 
-        $scope.loadUserData = function () {
+        //Retrieve user data from session service
+        $scope.loadUserData = function () {            
             $scope.activeUser = userSessionService.getUserData();
-            console.log("active user " + $scope.activeUser.username);
+            if (Object.keys($scope.activeUser).length > 0) {
+                $scope.loggedIn = true;
+            }
         }
 
+        $scope.loadUserData();
+
         $scope.logoutUser = function () {
-            var e = {}
-            userSessionService.setUserData(e);
+            userSessionService.clearUserData();
             $scope.loggedIn = false;
+            $rootScope.$broadcast("logChange");
         }
     });
