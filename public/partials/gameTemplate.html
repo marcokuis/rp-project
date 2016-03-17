@@ -8,9 +8,9 @@
                 <li><a href="#Home">Home</a></li>
                 <li><a href="#Game">Game</a></li>
                 <li ng-show="recruiting"><select ng-model="selectRole" ng-options="item for item in gamedata.positions"></select><button ng-click="joinGame()">Join Game</button></li>
-                <li ng-show="playerID"><input type="button" ng-click="save()" value="Save Game" /></li>
-                <li ng-show="playerID"><textarea id="Notes" placeholder="Player can keep notes here.">{{notes}}</textarea></li>
-                <li ng-show="playerID"><textarea id="Equipment" placeholder="Player has a list of equipment here.">{{equipment}}</textarea></li>
+                <li ng-show="userdata"><input type="button" ng-click="save()" value="Save Game" /></li>
+                <li ng-show="userdata"><textarea id="Notes" ng-model="userdata.notes" placeholder="Player can keep notes here.">{{userdata.notes}}</textarea></li>
+                <li ng-show="userdata"><textarea id="Equipment" ng-model="userdata.equipment" placeholder="Player has a list of equipment here.">{{userdata.equipment}}</textarea></li>
                 <li><div id="sidebarBlank"></div></li>
             </ul>
 
@@ -20,32 +20,32 @@
         <div class="col-xs-12 col-sm-9 banner"><img src="./Content/Images/banner.jpg" class="img-responsive" alt="banner" width="800" height="170"></div>
         <div class="col-xs-12 col-sm-9" align="center"><h1>{{gamedata.title}}</h1></div>
         <div class="col-xs-12 col-sm-9">
-            <textarea id="GMstory" ng-model="gamedata.contentStory" ng-readonly="playerID != 'GM'" placeholder="Main Story / GM area">{{gamedata.contentStory}}</textarea>
+            <textarea id="GMstory" ng-model="gamedata.contentStory" ng-readonly="userdata.role != 'GM'" placeholder="Main Story / GM area">{{gamedata.contentStory}}</textarea>
         </div>
 
         <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(1)">
             <textarea class="playerEntry" id="Player1" 
-                        ng-model="gamedata.contentPlayers[0]" ng-readonly="playerID != '1'" placeholder="Player 1">{{gamedata.contentPlayers[0]}}</textarea>
+                        ng-model="gamedata.contentPlayers[0]" ng-readonly="userdata.role != '1'" placeholder="Player 1">{{gamedata.contentPlayers[0]}}</textarea>
         </div>
         <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(2)">
             <textarea class="playerEntry" id="Player2"
-                        ng-model="gamedata.contentPlayers[1]" ng-readonly="playerID != '2'" placeholder="Player 2">{{gamedata.contentPlayers[1]}}</textarea>
+                        ng-model="gamedata.contentPlayers[1]" ng-readonly="userdata.role != '2'" placeholder="Player 2">{{gamedata.contentPlayers[1]}}</textarea>
         </div>
         <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(3)">
             <textarea class="playerEntry" id="Player3"
-                        ng-model="gamedata.contentPlayers[2]" ng-readonly="playerID != '3'" placeholder="Player 3">{{gamedata.contentPlayers[2]}}</textarea>
+                        ng-model="gamedata.contentPlayers[2]" ng-readonly="userdata.role != '3'" placeholder="Player 3">{{gamedata.contentPlayers[2]}}</textarea>
         </div>
         <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(4)">
             <textarea class="playerEntry" id="Player4" 
-                        ng-model="gamedata.contentPlayers[3]" ng-readonly="playerID != '4'" placeholder="Player 4">{{gamedata.contentPlayers[3]}}</textarea>
+                        ng-model="gamedata.contentPlayers[3]" ng-readonly="userdata.role != '4'" placeholder="Player 4">{{gamedata.contentPlayers[3]}}</textarea>
         </div>
         <div class="col-xs12 col-sm-4 col-md-3" ng-click="appendText(5)">
             <textarea class="playerEntry" id="Player5" 
-                        ng-model="gamedata.contentPlayers[4]" ng-readonly="playerID != '5'" placeholder="Player 5">{{gamedata.contentPlayers[4]}}</textarea>
+                        ng-model="gamedata.contentPlayers[4]" ng-readonly="userdata.role != '5'" placeholder="Player 5">{{gamedata.contentPlayers[4]}}</textarea>
         </div>
         <div class="col-xs12 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0" ng-click="appendText(6)">
             <textarea class="playerEntry" id="Player6" 
-                        ng-model="gamedata.contentPlayers[5]" ng-readonly="playerID != '6'" placeholder="Player 6">{{gamedata.contentPlayers[5]}}</textarea>
+                        ng-model="gamedata.contentPlayers[5]" ng-readonly="userdata.role != '6'" placeholder="Player 6">{{gamedata.contentPlayers[5]}}</textarea>
         </div>
 
     </div><!-- /.col-xs-12 main -->

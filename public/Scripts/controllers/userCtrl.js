@@ -31,7 +31,7 @@ angular.module('userCtrl', ['ngStorage'])
 
             $http.post('/loginUser', existingUser).
                  success(function (){
-                     $http.get('/userLogin/' + existingUser.name).
+                     $http.get('/userGetInfo/' + existingUser.name).
                          success(function (data, status, headers, config) {
                              userSessionService.setUserData(data);
                              $scope.loadUserData();

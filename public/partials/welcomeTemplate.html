@@ -7,15 +7,18 @@
             <ul class="nav">
                 <li><a href="#Home">Home</a></li>
                 <li><a href="#Game">Game</a></li>
-                <li><input type="button" ng-click="createNewGame()" value="New Game" /></li>
+                <li ng-show="loggedIn"><input type="button" ng-click="createNewGame()" value="New Game" /></li>
             </ul>
 
         </div>
 
         <!-- main area -->
         <div class="col-xs-12 col-sm-9">
-            <h1>Welcome to ROLE WITH IT</h1>
-            <h3>The free form roleplay hub</h3>
+            <div>
+                <h1>Welcome to ROLE WITH IT</h1>
+                <h3>The free form roleplay hub</h3>
+            </div>
+
             <table>
                 <tr ng-repeat="game in gamedata">
                     <td ng-click="gameLoad(game._id)"><h2>{{game.title}}</h2></td>

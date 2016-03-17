@@ -5,7 +5,7 @@ angular.module('gameCtrl', ['ngStorage'])
     .controller('gameCtrlr', function ($scope, $rootScope, $http, $localStorage, activeGameService, userSessionService) {
         $scope.gamedata = {};
         $scope.userdata = null;
-        $scope.playerID = '';
+        $scope.user_id = '';
         $scope.recruiting = false;
         
         //load game data into textareas
@@ -16,18 +16,15 @@ angular.module('gameCtrl', ['ngStorage'])
 
         //load data of currently logged in user
         $scope.userLoad = function () {
-            $scope.recruiting = false;                                      //default: not recruiting
+            $scope.recruiting = true;                                      //default: not recruiting
             var player = userSessionService.getUserData();
-            console.log("player: " + angular.toJson(player));
-            if (Object.keys(player).length > 0) {                           //check if player object not empty
-                $scope.userdata = userSessionService.getUserData()          
-                if ($scope.userdata.games.length > 0) {                     //check whether player in any games
-                    angular.forEach($scope.userdata.games, function (value) {   //loop through games
+            $scope.user_id = player._id;
+            if (Object.keys(player).length > 0) {                           //check if player object not empty          
+                if (player.games.length > 0) {                              //check whether player in any games
+                    angular.forEach(player.games, function (value) {        //loop through games
                         if (value.id == $scope.gamedata._id) {              //check whether any of them are current game
-                            $scope.playerID = value.role;                   //set player role (GM or 1-6)
-                        }
-                        else {
-                            $scope.recruiting = true;                       //if player not in current game: recruiting
+                            $scope.userdata = value;
+                            $scope.recruiting = false;
                         }
                     });
                 }
@@ -36,9 +33,8 @@ angular.module('gameCtrl', ['ngStorage'])
                 }
             }
             else {
-                console.log("userload");
                 $scope.userdata = null;
-                $scope.playerID = '';
+                $scope.user_id = '';
                 $scope.recruiting = false;
             }
         }
@@ -50,7 +46,6 @@ angular.module('gameCtrl', ['ngStorage'])
         $scope.save = function () {
             var dat = $scope.gamedata;
             var udat = $scope.userdata;
-            udat.gameid = dat._id;
             $http.put('/gameUpdate/' + dat._id, angular.toJson(dat))
                 .success(function () {
                     console.log("Saved successfully");
@@ -59,7 +54,7 @@ angular.module('gameCtrl', ['ngStorage'])
                 .error(function () {
                     console.log("Failed to save game");
                 });
-            $http.put('/notesEquipmentUpdate/' + udat._id, angular.toJson(udat))
+            $http.put('/notesEquipmentUpdate/' + $scope.user_id, angular.toJson(udat))
                 .success(function () {
                     console.log("Saved successfully");
                 })
@@ -80,7 +75,6 @@ angular.module('gameCtrl', ['ngStorage'])
         //player wants to join game
         $scope.joinGame = function () {
             var role = $scope.selectRole;
-            console.log(role);
             if (role) {
                 angular.forEach($scope.gamedata.positions, function (item, index) {
                     if (item === role) {
@@ -89,10 +83,9 @@ angular.module('gameCtrl', ['ngStorage'])
                 });
                 var dat = $scope.userdata;
                 var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": "", "notes": "" };
-                $http.put('/userJoin/' + dat._id, angular.toJson(gameInfo))
+                $http.put('/userJoin/' + $scope.user_id, angular.toJson(gameInfo))
                     .success(function () {
-                        console.log("Player joined game");
-                        $http.get('/userLogin/' + dat.username)
+                        $http.get('/userLogin/' + $scope.user_id)
                             .success(function (data, status, headers, config) {
                                 userSessionService.setUserData(data);
                                 $scope.userLoad();
@@ -110,7 +103,6 @@ angular.module('gameCtrl', ['ngStorage'])
         }
 
         $rootScope.$on("logChange", function () {
-            console.log("receiving broadcast");
             $scope.userLoad();
         });
     });

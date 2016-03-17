@@ -6,8 +6,16 @@ var crypto = require('crypto');
 module.exports = function (app) {
 
     //GET
-    app.get('/userLogin/:name', function (req, res) {
+    app.get('/userLogin/:id', function (req, res) {
         
+        User.findOne({ '_id': req.params.id }, function (err, userdata) {
+            if (err) { res.send(err); }
+            else { delete userdata.password; res.json(userdata); }
+        });
+    });
+
+    app.get('/userGetInfo/:name', function (req, res) {
+
         User.findOne({ 'username': req.params.name }, function (err, userdata) {
             if (err) { res.send(err); }
             else { delete userdata.password; res.json(userdata); }
@@ -16,32 +24,33 @@ module.exports = function (app) {
 
     //POST
     app.post('/newUser', function (req, res) {
-        var newUser = new User({
-            username: req.body.name,
-            password: req.body.pw,
-            games: []
-        })
-        /*if (!req.body.username || !req.body.password) {
-            console.log("name or pw not accepted");
-            res.send('Username and password both required');
-            return;
-        }*/
-        var pwHash = crypto.createHash("md5")
-              .update(req.body.pw)
-              .digest("hex");
-        newUser.password = pwHash;
+        if (typeof(req.body.pw) === "undefined" | typeof(req.body.name) === "undefined") {
+            alert('Missing Username or Password!');
+            res.status(404).end();
+        }
+        else{
+            var newUser = new User({
+                username: req.body.name,
+                password: req.body.pw,
+                games: []
+            })
 
-        newUser.save(function (err) {
-            if (err) res.send(err);
-            res.status(200).end();
-        });
+            var pwHash = crypto.createHash("md5")
+                  .update(req.body.pw)
+                  .digest("hex");
+            newUser.password = pwHash;
+
+            newUser.save(function (err) {
+                if (err) res.send(err);
+                res.status(200).end();
+            });
+        }
     })
     
     
     app.post('/loginUser', function (req, res) {
-        console.log(req.body.pw + req.body.name);
         if (typeof(req.body.pw) === "undefined" | typeof(req.body.name) === "undefined") {
-            console.log('No Username or Password');
+            alert('Missing Username or Password!');
                 res.status(404).end();
         }
         else{
@@ -83,10 +92,23 @@ module.exports = function (app) {
         var userid = req.params.userid;
         var u_id = new mongoose.Types.ObjectId(userid);
         var query = { _id: u_id };
-        User.update(query, { games: req.body.games }, function (err) {
-            if (err) res.send(err);
-            res.status(200).end();
-            
+        User.findOne(query).exec(function (err, tempuser) {
+            var gamesArray = tempuser.games;
+            for (i = 0; i < gamesArray.length; i++) {
+                if (gamesArray[i].id === req.body.id) {
+                    gamesArray[i] = req.body;
+                }
+            }
+            tempuser.games = gamesArray;
+            tempuser.markModified('games');
+            tempuser.save(function (err) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    res.status(200).end();
+                }
+            });
         });
     });
 }

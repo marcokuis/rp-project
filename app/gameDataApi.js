@@ -39,7 +39,6 @@ module.exports = function (app) {
     
     //PUT
     app.put('/gameUpdate/:gameid', function (req, res) {
-        console.log("app put data: " + req.body.contentStory + req.body.contentPlayers);
         var gameid = req.params.gameid;
         var o_id = new mongoose.Types.ObjectId(gameid);
         var query = { _id: o_id };
