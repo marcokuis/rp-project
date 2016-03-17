@@ -8,14 +8,17 @@ angular.module('gameCtrl', ['ngStorage'])
         $scope.user_id = '';
         $scope.recruiting = false;
         
+        
+
         //load game data into textareas
         $scope.load = function () {
             $scope.gamedata = activeGameService.getGameData();
         }
-        $scope.load();                                                      //load game data from game service upon page opening
+                                                             //load game data from game service upon page opening
 
         //load data of currently logged in user
         $scope.userLoad = function () {
+            console.log("loading userdata");
             $scope.recruiting = true;                                      //default: not recruiting
             var player = userSessionService.getUserData();
             $scope.user_id = player._id;
@@ -39,8 +42,7 @@ angular.module('gameCtrl', ['ngStorage'])
             }
         }
 
-        $scope.userLoad();                                                  //load user data upon page opening
-
+       
 
         //Save data to rpdb database
         $scope.save = function () {
@@ -102,7 +104,14 @@ angular.module('gameCtrl', ['ngStorage'])
             else{console.log("no role selected")}
         }
 
+        //detect login change
         $rootScope.$on("logChange", function () {
+            console.log("login change");
             $scope.userLoad();
         });
+
+        $scope.load();
+        $scope.userLoad();                                                  //load user data upon page opening
+
+        
     });

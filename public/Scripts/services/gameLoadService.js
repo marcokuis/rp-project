@@ -1,17 +1,21 @@
 
 // Save the data for the 'active' game
 
-angular.module('gameLoadService',[])
-    .service('activeGameService', function() {
+angular.module('gameLoadService',['ngStorage'])
+    .service('activeGameService', function($sessionStorage) {
         var gameData = {};
 
         // Set active game data in memory
         var setGameData = function(curGame) {
             gameData = curGame;
+            $sessionStorage.gameData = gameData;
         };
 
         // Return active game data 
-        var getGameData = function(){
+        var getGameData = function () {
+            if ($sessionStorage.hasOwnProperty("gameData")) {
+                gameData = $sessionStorage.gameData;
+            }
             return gameData;
         };
 
