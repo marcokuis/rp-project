@@ -56,7 +56,7 @@ a{
 
 
 #sidebarBlank{
-    height: 45em;
+    height: 60em;
 }
 /* collapsed sidebar styles */
 @media screen and (max-width: 767px) {

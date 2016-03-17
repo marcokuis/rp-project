@@ -84,7 +84,7 @@ angular.module('gameCtrl', ['ngStorage'])
                     }
                 });
                 var dat = $scope.userdata;
-                var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": "", "notes": "" };
+                var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": [{ name: "Nose", V: false }, { name: "Feet", V: false }, { name: "Hair", V: false }], "notes": "" };
                 $http.put('/userJoin/' + $scope.user_id, angular.toJson(gameInfo))
                     .success(function () {
                         $http.get('/userLogin/' + $scope.user_id)
@@ -102,6 +102,11 @@ angular.module('gameCtrl', ['ngStorage'])
                     });
             }
             else{console.log("no role selected")}
+        }
+
+        $scope.addItemToInventory = function () {
+            var newItem = prompt("Name of the new item:");
+            $scope.userdata.equipment.push(newItem);
         }
 
         //detect login change
