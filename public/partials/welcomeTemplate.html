@@ -5,7 +5,9 @@
         <!-- sidebar -->
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <ul class="nav">
-                <li ng-show="loggedIn"><input type="button" ng-click="createNewGame()" value="New Game" /></li>
+                <li><a ng-show="loggedIn"><h3 ng-click="createNewGame()">New Game</h3></a></li>
+                <li><a ng-show="filterGames && loggedIn" ng-click="filterGames = !filterGames"><h3>Show All Games</h3></a></li>
+                <li><a ng-show="!filterGames && loggedIn" ng-click="filterGames = !filterGames"><h3>Show Your Games</h3></a></li>
             </ul>
 
         </div>
@@ -18,9 +20,15 @@
             </div>
 
             <table>
-                <tr ng-repeat="game in gamedata">
+                <tr ng-hide="filterGames" ng-repeat="game in gamedata">
                     <td ng-click="gameLoad(game._id)"><h2>{{game.title}}</h2></td>
                 </tr>
+                
+                <tr ng-show="filterGames" ng-repeat="game in gamedata">
+                    <td ng-click="gameLoad(game._id)"><h2>{{game | gamesWithUser}}</h2></td>
+                </tr>
+
+
             </table>
         </div>
     </div><!-- /.col-xs-12 main -->

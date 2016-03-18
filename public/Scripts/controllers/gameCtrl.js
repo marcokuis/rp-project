@@ -84,13 +84,14 @@ angular.module('gameCtrl', ['ngStorage'])
                     }
                 });
                 var dat = $scope.userdata;
-                var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": [{ name: "Nose", V: false }, { name: "Feet", V: false }, { name: "Hair", V: false }], "notes": "" };
+                var gameInfo = { "id": $scope.gamedata._id, "role": role, "equipment": [{ name: "Underwear", V: false }], "notes": "" };
                 $http.put('/userJoin/' + $scope.user_id, angular.toJson(gameInfo))
                     .success(function () {
                         $http.get('/userLogin/' + $scope.user_id)
                             .success(function (data, status, headers, config) {
                                 userSessionService.setUserData(data);
                                 $scope.userLoad();
+                                $scope.save();
                             }).
                              error(function (data, status, headers, config) {
                                  console.log(status);
@@ -106,7 +107,25 @@ angular.module('gameCtrl', ['ngStorage'])
 
         $scope.addItemToInventory = function () {
             var newItem = prompt("Name of the new item:");
-            $scope.userdata.equipment.push(newItem);
+            var itemEntry = { name: newItem, V: false };
+            $scope.userdata.equipment.push(itemEntry);
+        }
+
+        $scope.deleteItemFromInventory = function () {
+            angular.forEach($scope.userdata.equipment, function (item, index) {
+                if (item.V === true) {
+                    $scope.userdata.equipment.splice(index, 1);
+                }
+            });
+        }
+
+        $scope.editItem = function () {
+            angular.forEach($scope.userdata.equipment, function (item, index) {
+                if (item.V === true) {
+                    var newName = prompt("Change " + item.name + " to:")
+                    item.name = newName;
+                }
+            });
         }
 
         //detect login change

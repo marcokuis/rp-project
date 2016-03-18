@@ -8,10 +8,18 @@
                 <li ng-show="recruiting"><select ng-model="selectRole" ng-options="item for item in gamedata.positions"></select><button ng-click="joinGame()">Join Game</button></li>
                 <li ng-show="userdata"><h3>Notes</h3></li>
                 <li ng-show="userdata"><textarea id="Notes" ng-model="userdata.notes" placeholder="Player can keep notes here.">{{userdata.notes}}</textarea></li>
-                <li ng-show="userdata"><h3>Equipment</h3></li>
-                <li ng-show="userdata"><div id="Equipment"><p ng-repeat="item in userdata.equipment" placeholder="Player has a list of equipment here.">{{item}}</p></div></li>
-                <li ng-show="userdata"><input type="button" ng-click="addItemToInventory()" value="New Item" /></li>
-                <li ng-show="userdata"><input type="button" ng-click="save()" value="Save Game" /></li>
+                <li ng-show="userdata"><h3>Inventory</h3></li>
+                <li ng-show="userdata"><div id="Equipment">
+                    <p ng-repeat="item in userdata.equipment" placeholder="Player has a list of equipment here.">
+                        <input type="checkbox" ng-model="item.V"/> {{item.name}}
+                    </p>
+                </div></li>
+                <li ng-show="userdata">
+                    <input type="button" ng-click="addItemToInventory()" value="New Item" />
+                    <input type="button" ng-click="editItem()" value="Edit Item" />
+                    <input type="button" ng-click="deleteItemFromInventory()" value="Delete Item" />
+                </li>
+                <li ng-show="userdata"><a><h3 ng-click="save()">Save Game</h3></a></li>
                 <li><div id="sidebarBlank"></div></li>
             </ul>
 

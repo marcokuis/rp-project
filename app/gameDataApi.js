@@ -7,8 +7,8 @@ module.exports = function (app) {
     //GET
     app.get('/gamesLoad', function (req, res) {
         Game.find({}, '_id title', function (err, gamedata) {
-            if (err) res.send(err);
-            else res.json(gamedata);
+            if (err) { res.send(err); }
+            else { res.json(gamedata); }
         });
     });
 
@@ -16,8 +16,8 @@ module.exports = function (app) {
         var gameid = req.params.gameid;
         var o_id = new mongoose.Types.ObjectId(gameid);
         Game.findOne({ '_id': o_id }, function (err, gamedata) {
-            if (err) res.send(err);
-            else res.json(gamedata);
+            if (err) { res.send(err); }
+            else { res.json(gamedata); }
         });
     });
 
@@ -32,8 +32,8 @@ module.exports = function (app) {
         })
 
         newGame.save(function (err) {
-            if (err) res.send(err);
-            res.status(200).end();
+            if (err) { res.send(err); }
+            else { res.status(200).end(); }
         });
     });
     
@@ -42,9 +42,13 @@ module.exports = function (app) {
         var gameid = req.params.gameid;
         var o_id = new mongoose.Types.ObjectId(gameid);
         var query = { _id: o_id };
-        Game.update(query, { contentStory: req.body.contentStory, contentPlayers: req.body.contentPlayers }, function (err) {
-            if (err) res.send(err);
-            res.status(200).end();
+        Game.update(query, {
+            contentStory: req.body.contentStory,
+            contentPlayers: req.body.contentPlayers,
+            positions: req.body.positions
+        }, function (err) {
+            if (err) { res.send(err); }
+            else { res.status(200).end(); }
         });
     });
 }

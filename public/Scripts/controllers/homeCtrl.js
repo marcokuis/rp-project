@@ -2,19 +2,39 @@
 // Controller for Home view
 
 angular.module('homeCtrl', [])
-    .controller('homeCtrlr', function ($scope, $rootScope, $http, $location,userSessionService, activeGameService) {
+    .filter('gamesWithUser', function (userSessionService) {
+
+        return function (game_id) {
+            var userGames = userSessionService.getUserData();
+            var userGamesID = []
+            angular.forEach(userGames.games, function (game) {
+                userGamesID.push(game.id)
+            });
+            if (userGamesID.indexOf(game_id._id) > -1) {
+                return game_id.title;
+            }
+        }
+    })
+    .controller('homeCtrlr', function ($scope, $rootScope, $http, $location, userSessionService, activeGameService) {
         $scope.gamedata = {}
         $scope.loggedIn = false;
+        $scope.filterGames = false;
+
 
         //Create new game. Title entered in prompt.
         $scope.createNewGame = function () {
             var newTitle = prompt("Title of the new game: ");
-            var newGame = {
-                title: newTitle
+            if (newTitle === null || newTitle.length < 1) {
+                return;
             }
-            $http.post('/gameSave', angular.toJson(newGame)).success(function () {
-                $scope.load();
-            });
+            else {
+                var newGame = {
+                    title: newTitle
+                }
+                $http.post('/gameSave', angular.toJson(newGame)).success(function () {
+                    $scope.load();
+                });
+            }
         }
 
         //Load ids and titles of all games
@@ -54,5 +74,8 @@ angular.module('homeCtrl', [])
 
         $rootScope.$on("logChange", function () {
             $scope.userLoad();
+            if ($scope.loggedIn === false) {
+                $scope.filterGames = false;
+            }
         });
     });
