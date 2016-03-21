@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     //GET
     app.get('/', function(request, response) {
-        response.redirect('/rpproject.html');
+        response.redirect('/public/rpproject.html');
     });
     
     app.get('/userLogin/:id', function (req, res) {
