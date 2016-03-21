@@ -1,1 +1,1 @@
-web: node rp=server.js
+web: node rp-server.js
