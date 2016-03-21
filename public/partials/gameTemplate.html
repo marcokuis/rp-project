@@ -6,9 +6,9 @@
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <ul class="nav">
                 <li ng-show="recruiting"><select ng-model="selectRole" ng-options="item for item in gamedata.positions"></select><button ng-click="joinGame()">Join Game</button></li>
-                <li ng-show="userdata"><h3>Notes</h3></li>
+                <li ng-show="userdata"><h3 class="sidebarHeader">Notes</h3></li>
                 <li ng-show="userdata"><textarea id="Notes" ng-model="userdata.notes" placeholder="Player can keep notes here.">{{userdata.notes}}</textarea></li>
-                <li ng-show="userdata"><h3>Inventory</h3></li>
+                <li ng-show="userdata"><h3 class="sidebarHeader">Inventory</h3></li>
                 <li ng-show="userdata"><div id="Equipment">
                     <p ng-repeat="item in userdata.equipment" placeholder="Player has a list of equipment here.">
                         <input type="checkbox" ng-model="item.V"/> {{item.name}}
@@ -27,7 +27,7 @@
         </div>
 
         <!-- main area -->
-        <div class="col-xs-12 col-sm-9 title" align="center"><h1>{{gamedata.title}}</h1></div>
+        <div class="col-xs-12 col-sm-9 gametitle" align="center"><h1>{{gamedata.title}}</h1></div>
         <div class="col-xs-12 col-sm-9 gmback">
             <textarea id="GMstory" ng-model="gamedata.contentStory" ng-readonly="userdata.role != 'GM'" placeholder="Main Story / GM area">{{gamedata.contentStory}}</textarea>
         </div>

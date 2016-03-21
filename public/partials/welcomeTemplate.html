@@ -14,12 +14,13 @@
         </div>
 
         <!-- main area -->
-        <div class="col-xs-12 col-sm-9 title">
+        <div class="col-xs-12 col-sm-9 pagetitle">
             <div class="pagetitle">
                 <h1>ROLE WITH IT</h1>
                 <h3>The free form roleplay hub</h3>
             </div>
-            <div>
+            <div class="tableHeader">
+                <h2 id="gamelistHeader">AVAILABLE GAMES:</h2>
                 <table class="gamelist">
                     <tr ng-hide="filterGames" ng-repeat="game in gamedata">
                         <td ng-click="gameLoad(game._id)"><h2>{{game.title}}</h2></td>
