@@ -1,4 +1,4 @@
-// JavaScript source code
+ // JavaScript source code
 var User = require('./model/userModel');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
@@ -6,6 +6,10 @@ var crypto = require('crypto');
 module.exports = function (app) {
 
     //GET
+    app.get('/', function(request, response) {
+        response.send('Hello World!');
+    });
+    
     app.get('/userLogin/:id', function (req, res) {
         
         User.findOne({ '_id': req.params.id }, function (err, userdata) {
