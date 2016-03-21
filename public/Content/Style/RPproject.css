@@ -1,5 +1,7 @@
 body {
-  padding-top: 51px;  
+  padding-top: 51px; 
+  background-image: url("../Images/mainbackground.jpg") ;
+  background-attachment: fixed;
 }
 a{
     cursor:pointer;
@@ -23,6 +25,11 @@ a{
   border:0 #f2f2f2 solid;
   border-bottom-width:1px;
 }
+
+.topSideBlank{
+    height: 200px;
+}
+
 .page-header{
     text-align: center;
 }
@@ -38,13 +45,29 @@ a{
     padding: 0.5em 1em;
     box-sizing: border-box;
     border: 2px solid #ccc;
-    border-radius: 4px;
     background-color: #f8f8f8;
     resize: none;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 1em;
     overflow:auto;
+    
 }
+
+
+textarea:focus{
+    outline: none !important;
+    box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.75);
+}
+
+
+#Notes, #Equipment {    
+    border-radius: 6px;
+}
+
+#GMstory, .playerEntry{
+    border-radius: 10px;
+}
+
 
 .playerEntry{
     margin-bottom: 1em;
@@ -54,10 +77,81 @@ a{
     height:14em;
 }
 
+.title, .gamelist{
+    background-color: rgba(255,255,255,0);
+}
+
+.pagetitle{
+    font-family: 'Copperplate Gothic', Rockwell, Arial, sans-serif;
+    text-align:center;
+}
+.pagetitle h1{    
+    font-stretch: condensed;
+    font-size: 92px;
+}
+.pagetitle h3{    
+    font-stretch: condensed;
+    font-size: 48px;
+    color: #4A2600 
+}
+
+.gmback{
+   background-color: rgba(255,255,255,0);
+}
+
 
 #sidebarBlank{
     height: 60em;
 }
+
+#sidebar li{
+    border: none;
+}
+
+#sidebar li a {
+    width:100%;
+    text-align:center;
+}
+
+input[type="button"],  #sidebar li a{
+	-moz-box-shadow:inset 0px 1px 0px 0px #a6827e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #a6827e;
+	box-shadow:inset 0px 1px 0px 0px #a6827e;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d4a577), color-stop(1, #9e7c59));
+	background:-moz-linear-gradient(top, #d4a577 5%, #9e7c59 100%);
+	background:-webkit-linear-gradient(top, #d4a577 5%, #9e7c59 100%);
+	background:-o-linear-gradient(top, #d4a577 5%, #9e7c59 100%);
+	background:-ms-linear-gradient(top, #d4a577 5%, #9e7c59 100%);
+	background:linear-gradient(to bottom, #d4a577 5%, #9e7c59 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#d4a577', endColorstr='#9e7c59',GradientType=0);
+	background-color:#d4a577;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #b07b4d;
+	display:inline-block;
+	cursor:pointer;
+	color:black;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 10px;
+}
+input[type="button"]:hover, #sidebar li a:hover{
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #9e7c59), color-stop(1, #d4a577));
+	background:-moz-linear-gradient(top, #9e7c59 5%, #d4a577 100%);
+	background:-webkit-linear-gradient(top, #9e7c59 5%, #d4a577 100%);
+	background:-o-linear-gradient(top, #9e7c59 5%, #d4a577 100%);
+	background:-ms-linear-gradient(top, #9e7c59 5%, #d4a577 100%);
+	background:linear-gradient(to bottom, #9e7c59 5%, #d4a577 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e7c59', endColorstr='#d4a577',GradientType=0);
+	background-color:#9e7c59;
+}
+input[type="button"]:active {
+	position:relative;
+	top:1px;
+}
+
+
 /* collapsed sidebar styles */
 @media screen and (max-width: 767px) {
   .row-offcanvas {
