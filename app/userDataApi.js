@@ -12,7 +12,7 @@ module.exports = function (app) {
     });
 
     app.get('/rpproject', function (req, res) {
-        res.sendFile(path.join('role-with-it', '/public', 'angular.js'));
+        res.sendFile(__dirname + "/public/" + "RPproject.html");
     });
     
     app.get('/userLogin/:id', function (req, res) {
