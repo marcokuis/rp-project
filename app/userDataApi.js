@@ -12,7 +12,7 @@ module.exports = function (app) {
     });
 
     app.get('/rpproject', function (req, res) {
-        res.sendFile(path.join(__dirname, '../public', 'rpproject.html'));
+        res.sendFile(path.join('/public', 'rpproject.html'));
     });
     
     app.get('/userLogin/:id', function (req, res) {
