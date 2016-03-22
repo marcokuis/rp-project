@@ -2,6 +2,7 @@
 var User = require('./model/userModel');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
+var path = require('path');
 
 module.exports = function (app) {
 
@@ -11,7 +12,7 @@ module.exports = function (app) {
     });
 
     app.get('/rpproject', function (req, res) {
-        res.sendFile('../public/rpproject.html');
+        res.sendFile(path.join(__dirname, '../public', 'rpproject.html'));
     });
     
     app.get('/userLogin/:id', function (req, res) {
