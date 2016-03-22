@@ -11,7 +11,7 @@ module.exports = function (app) {
     });
 
     app.get('/rpproject', function (req, res) {
-        res.sendfile('rpproject.html');
+        res.sendfile('./public/rpproject.html');
     });
     
     app.get('/userLogin/:id', function (req, res) {
