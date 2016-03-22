@@ -10,7 +10,7 @@ module.exports = function (app) {
         response.redirect('/rpproject');
     });
 
-    app.get('/rpproject', function (request, response) {
+    app.get('/rpproject', function (req, res) {
         res.sendfile('rpproject.html');
     });
     
